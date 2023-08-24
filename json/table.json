@@ -1,0 +1,32 @@
+{
+  "code": 0,
+  "count": 1000,
+  "data": [
+    {
+      "id": 1,
+      "name": "User-1",
+      "type": 4,
+      "status": 2,
+      "score": 28,
+      "experience": 54981,
+      "sex": "男",
+      "city": "丽江市",
+      "description": "-",
+      "createTime": "2014-06-04 12:29:55",
+      "isParent": true
+    },
+    {
+      "id": 2,
+      "name": "User-2",
+      "type": 4,
+      "status": 2,
+      "score": 89,
+      "experience": 97592,
+      "sex": "女",
+      "city": "钦州市",
+      "description": "-",
+      "createTime": "1985-05-26 03:50:09",
+      "isParent": true
+    }
+  ]
+}

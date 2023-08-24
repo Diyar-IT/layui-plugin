@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>enableDisabledNodeExpand Demo</title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 10px;">
+        <blockquote class="layui-elem-quote">
+            异步加载数据父点没有子点数据情况展开时候同时展开所有一展开过的字节<br>
+            1、展开User-1然后折叠<br>
+            2、展开User-2然后折叠<br>
+            3、再次展开User-1 发现我说的BUG<br>
+            相关PR【<a href="https://github.com/layui/layui/pull/1326" target="_blank" style="color: #0c64eb !important;">https://github.com/layui/layui/pull/1326</a> 】
+        </blockquote>
+        <table class="layui-hide" id="ID-treeTable-demo"></table>
+    </div>
+    <div style="margin-bottom: 10px;">
+        <blockquote class="layui-elem-quote">
+            修复BUG后，增加enableDisabledNodeExpand属性效果<br>
+            1、点击【全部展开】<br>
+            2、然后点击上面表格的【全部展开】按钮<br>
+            3、禁止情况不允许展开子点<br>
+            4、修复treeTable设置cols的type: 'numbers'折叠时不更新问题<br>
+            相关PR 【<a href="https://github.com/layui/layui/pull/1332" target="_blank" style="color: #0c64eb !important;">https://github.com/layui/layui/pull/1332</a>】
+        </blockquote>
+        <table class="layui-hide" id="ID-treeTable-demo-2"></table>
+    </div>
+</div>
+
+<script type="text/html" id="TPL-treeTable-demo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="expandAll"><i class="layui-icon layui-icon-shrink-right"></i> 全部展开</button>
+        <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="collapse"><i class="layui-icon layui-icon-spread-left"></i> 全部折叠</button>
+    </div>
+</script>
+
+<script type="text/html" id="TPL-treeTable-demo-2">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="expandAll"><i class="layui-icon layui-icon-shrink-right"></i> 全部展开</button>
+        <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="collapse"><i class="layui-icon layui-icon-spread-left"></i> 全部折叠</button>
+    </div>
+</script>
+<script type="text/html" id="TPL-treeTable-demo-tools">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="addChild">新增</a>
+        <a class="layui-btn layui-btn-xs" lay-event="more">更多 <i class="layui-icon layui-icon-down"></i></a>
+    </div>
+</script>
+
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="common.js"></script>
+
+<script>
+  layui.use(function () {
+    var treeTable = layui.treeTable;
+    var layer = layui.layer;
+    var dropdown = layui.dropdown;
+    var id = 0;
+    var getNode = function (count, step, isParent) {
+      step = step || 1;
+      //isParent = isParent || true;
+      var result = [];
+      for (var i = 1; i < count + 1; i ++){
+        var id = step + i;
+        result.push({
+          id: id,
+          name: "User" + id,
+          type: 2,
+          status: 3,
+          score: 50,
+          experience: 72052,
+          sex: "女",
+          city: "汕头市",
+          description: "-",
+          createTime: layui.util.toDateString(new Date().getTime(), 'yyyy-MM-dd HH:mm:ss'),
+          parentId: step,
+          isParent: isParent,
+          LAY_DISABLED : id % 2 === 0,
+          LAY_CHECKED : id % 2 === 0
+        })
+      }
+      return result;
+    }
+    // 渲染
+    var inst = treeTable.render({
+      nodeCount: 0,
+      elem: '#ID-treeTable-demo',
+      url: 'json/table.json', // 此处为静态模拟数据，实际使用时需换成真实接口
+      tree: {
+        // 异步加载子节点
+        async: {
+          //url : 'json/table-async.json',
+          enable: true,
+          autoParam: ["parentId=id"],
+          format: function (trData, options, callback) {
+            options.nodeCount ++;
+            callback(trData.id !== 1 ? getNode(10, trData.id , options.nodeCount <= 3) : []);
+          }
+        },
+        callback: {
+          beforeExpand: function () {
+            //console.log(arguments);
+            //return false;
+          }
+        }
+      },
+      view: {
+        dblClickExpand: true,
+        iconLeaf: '<i class="layui-icon layui-icon-layer"></i>',
+        enableDisabledNodeExpand: true
+      },
+      height: '400px',
+      //maxHeight: '501px',
+      toolbar: '#TPL-treeTable-demo',
+      cols: [[
+        {type: 'checkbox', fixed: 'left'},
+        {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'},
+        {type: 'numbers', title: '序列', width: 80, sort: true},
+        {field: 'name', title: '用户名', minWidth: 180},
+        {field: 'sex', title: '性别', width: 80, sort: true},
+        {field: 'experience', title: '积分', width: 90, sort: true},
+        {field: 'city', title: '城市', width: 100},
+        {fixed: "right", title: "操作", width: 190, align: "center", toolbar: "#TPL-treeTable-demo-tools"}
+      ]],
+      size : 'xl',
+      cellMinWidth: 80,
+      page: {
+        layout: ['refresh', 'prev', 'page', 'next', 'skip', 'count', 'limit'],
+        curr: 1, groups: 10, first: '首页', last: '尾页'
+      },
+      limit: 20,
+      limits: [20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 1e3],
+      loading: !0
+    });
+
+    var inst2 = treeTable.render({
+      nodeCount: 0,
+      elem: '#ID-treeTable-demo-2',
+      url: 'json/table.json', // 此处为静态模拟数据，实际使用时需换成真实接口
+      tree: {
+        // 异步加载子节点
+        async: {
+          //url : 'json/table-async.json',
+          enable: true,
+          autoParam: ["parentId=id"],
+          format: function (trData, options, callback) {
+            options.nodeCount ++;
+            callback(trData.id !== 1 ? getNode(10, trData.id , options.nodeCount <= 3) : []);
+          }
+        },
+        callback: {
+          beforeExpand: function () {
+            //console.log(arguments);
+            //return false;
+          }
+        }
+      },
+      view: {
+        dblClickExpand: true,
+        iconLeaf: '<i class="layui-icon layui-icon-layer"></i>',
+        enableDisabledNodeExpand: false,
+      },
+      height: '400px',
+      toolbar: '#TPL-treeTable-demo-2',
+      cols: [[
+        {type: 'checkbox', fixed: 'left'},
+        {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'},
+        {type: 'numbers', title: '序列', width: 80, sort: true},
+        {field: 'name', title: '用户名', minWidth: 180},
+        {field: 'sex', title: '性别', width: 80, sort: true},
+        {field: 'experience', title: '积分', width: 90, sort: true},
+        {field: 'city', title: '城市', width: 100},
+        {fixed: "right", title: "操作", width: 190, align: "center", toolbar: "#TPL-treeTable-demo-tools"}
+      ]],
+      size : 'xl',
+      cellMinWidth: 80,
+      page: {
+        layout: ['refresh', 'prev', 'page', 'next', 'skip', 'count', 'limit'],
+        curr: 1, groups: 10, first: '首页', last: '尾页'
+      },
+      limit: 20,
+      limits: [20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 1e3],
+      loading: !0,
+      isDemo: true,
+    });
+
+
+    var event = function (event, id) {
+      treeTable.expandAll(id, event === 'expandAll', id === 'ID-treeTable-demo-2');
+    };
+
+    // 表头工具栏工具事件
+    treeTable.on("toolbar(ID-treeTable-demo)", function (obj) {
+      event(obj.event, obj.config.id);
+    });
+
+    treeTable.on("toolbar(ID-treeTable-demo-2)", function (obj) {
+      event(obj.event, obj.config.id);
+    });
+
+  });
+</script>
+</body>
+</html>

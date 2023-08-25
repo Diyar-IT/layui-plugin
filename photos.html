@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>相册</title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 30px;
+        }
+        .class-photos-demo img{
+            width: 160px;
+            height: 100px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    </style>
+
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="common.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h3 class="layui-font-blue layui-font-24">layer.photos</h3>
+    <blockquote class="layui-elem-quote">
+        1、修复切换图片重复打开窗口问题<br>
+        2、修复切换图片重复加载图片问题<br>
+        3、优化旋转，翻转，放大，缩小功能<br>
+        4、增加缩略图预览，点击切换功能<br>
+        5、增加拖拽关闭切换图片功能<br>
+    </blockquote>
+
+
+    <div class="code-1" style="margin: 10px 0;">
+        <pre class="layui-code code-demo" lay-options="{preview: true, layout: ['preview', 'code'], tools: ['full', 'copy']}">
+            <textarea>
+<div class="layui-btn-container">
+    <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="default"><i class="layui-icon layui-icon-picture"></i> 默认相册</button>
+    <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="hideFooter"><i class="layui-icon layui-icon-picture"></i> 隐藏底部栏</button>
+    <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="toolbar"><i class="layui-icon layui-icon-picture"></i> 顶部工具栏</button>
+    <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="thumbBar"><i class="layui-icon layui-icon-picture"></i> 缩略图预览</button>
+    <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="pullSwitch"><i class="layui-icon layui-icon-picture"></i> 拖拽操作</button>
+</div>
+<script>
+layui.use(function(){
+    var util = layui.util;
+
+    util.on('lay-event', {
+      default: function () {
+        layer.photos({
+          photos: { // 图片层的数据源
+            "title": "相册标题", // 相册标题
+            "id": 123, // 相册 id
+            "start": 0, // 初始显示的图片序号，默认 0
+            "data": getPhotos(10)
+          },
+          tab: function (data, layero) { // 图片层切换后的回调
+            console.log(data); // 当前图片数据信息
+            console.log(layero); // 图片层的容器对象
+          },
+          hideFooter: false,
+          toolbar: false,
+          thumbBar: false,
+          pullSwitch: false,
+          srcUseThumb: false
+        });
+      },
+      hideFooter: function () {
+        layer.photos({
+          photos: { // 图片层的数据源
+            "title": "相册标题", // 相册标题
+            "id": 123, // 相册 id
+            "start": 0, // 初始显示的图片序号，默认 0
+            "data": getPhotos(10)
+          },
+          tab: function (data, layero) { // 图片层切换后的回调
+            console.log(data); // 当前图片数据信息
+            console.log(layero); // 图片层的容器对象
+          },
+          hideFooter: true,
+          toolbar: false,
+          thumbBar: false,
+          pullSwitch: false,
+          srcUseThumb: false
+        });
+      },
+      toolbar: function () {
+        layer.photos({
+          photos: { // 图片层的数据源
+            "title": "相册标题", // 相册标题
+            "id": 123, // 相册 id
+            "start": 0, // 初始显示的图片序号，默认 0
+            "data": getPhotos(10)
+          },
+          tab: function (data, layero) { // 图片层切换后的回调
+            console.log(data); // 当前图片数据信息
+            console.log(layero); // 图片层的容器对象
+          },
+          hideFooter: false,
+          toolbar: true,
+          thumbBar: false,
+          pullSwitch: false,
+          srcUseThumb: false
+        });
+      },
+      thumbBar: function () {
+        layer.photos({
+          photos: { // 图片层的数据源
+            "title": "相册标题", // 相册标题
+            "id": 123, // 相册 id
+            "start": 0, // 初始显示的图片序号，默认 0
+            "data": getPhotos(10)
+          },
+          tab: function (data, layero) { // 图片层切换后的回调
+            console.log(data); // 当前图片数据信息
+            console.log(layero); // 图片层的容器对象
+          },
+          hideFooter: false,
+          toolbar: true,
+          thumbBar: true,
+          pullSwitch: false,
+          srcUseThumb: false
+        });
+      },
+      pullSwitch: function () {
+        layer.photos({
+          photos: { // 图片层的数据源
+            "title": "展示所有功能相册", // 相册标题
+            "id": 123, // 相册 id
+            "start": 0, // 初始显示的图片序号，默认 0
+            "data": getPhotos(30)
+          },
+          tab: function (data, layero) { // 图片层切换后的回调
+            console.log(data); // 当前图片数据信息
+            console.log(layero); // 图片层的容器对象
+          },
+          hideFooter: false,
+          toolbar: true,
+          thumbBar: true,
+          pullSwitch: true,
+          srcUseThumb: true
+        });
+      }
+    });
+});
+</script>
+            </textarea>
+        </pre>
+    </div>
+
+
+    <blockquote class="layui-elem-quote">
+        绑定页面图片元素
+    </blockquote>
+
+    <div class="code-1" style="margin: 10px 0;">
+<pre class="layui-code code-demo" lay-options="{preview: true, layout: ['preview', 'code'], tools: ['full', 'copy']}">
+  <textarea>
+<div class="class-photos-demo" id="ID-photos-demo">
+  <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg" layer-pid="" alt="photo-1">
+  <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10002.jpg" layer-pid="" alt="photo-2">
+  <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10003.jpg" layer-pid="" alt="photo-3">
+  <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10004.jpg" layer-pid="" alt="photo-4">
+  <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10005.jpg" layer-pid="" alt="photo-5">
+</div>
+<!-- import layui -->
+<script>
+layui.use(function(){
+
+    layer.photos({
+      photos: '#ID-photos-demo',
+      hideFooter: false,
+      toolbar: true,
+      thumbBar: true,
+      pullSwitch: true,
+      srcUseThumb : true
+    });
+});
+</script>
+  </textarea>
+</pre>
+    </div>
+
+
+</div>
+
+
+<script>
+  var getPhotos = function (count) {
+    var result = [];
+    var imgi = 0;
+    for (var i = 0; i < count; i++){
+      imgi++;
+      if (imgi >= 10){
+        imgi = 0;
+      }
+      result.push({
+        alt:'photo-' + (i + 1),
+        src : 'https://ossweb-img.qq.com/images/lol/web201310/skin/big1000'+ imgi +'.jpg',
+      });
+      if (i % 2 === 0) result[i].thumb = result[i].src;
+    }
+    return result;
+  }
+  layui.use(function () {
+    var $ = layui.$;
+
+    layui.code({
+      elem: $('.code-1 .code-demo')
+    });
+
+  });
+</script>
+</body>
+</html>

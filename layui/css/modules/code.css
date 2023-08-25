@@ -6,7 +6,7 @@
 html #layuicss-skincodecss{display:none; position: absolute; width:1989px;}
 
 /* 默认风格 */
-.layui-code-view{display: block; position: relative; margin: 11px 0; padding: 0; border: 1px solid #eee; border-left-width: 6px; background-color: #FAFAFA; color: #333; font-family: Courier New; font-size: 13px;}
+.layui-code-view{display: block; position: relative; margin: 11px 0; padding: 0; border: 1px solid #eee; border-left-width: 6px; background-color: #FAFAFA; color: #333;     font-family: 'Consolas', 'Courier New';font-size: 14px;}
 .layui-code-title{position: relative; padding: 0 10px; height: 40px; line-height: 40px; border-bottom: 1px solid #eee; font-size: 12px;}
 .layui-code-title > .layui-code-about{position: absolute; right: 10px; top: 0; color: #B7B7B7;}
 .layui-code-about > a{padding-left: 10px;}
@@ -39,7 +39,7 @@ html #layuicss-skincodecss{display:none; position: absolute; width:1989px;}
 .layui-code-item-preview > iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;}
 
 /* 工具栏  */
-.layui-code-tools{position: absolute; right: 11px; top: 3px;}
+.layui-code-tools{position: absolute; right: 11px;top: calc((100% - 22px) / 2);}
 .layui-code-tools > i{display: inline-block; margin-left: 6px; padding: 3px; cursor: pointer;}
 .layui-code-tools > i.layui-icon-file-b{color: #999;}
 .layui-code-tools > i:hover{color: #16b777;}
@@ -58,3 +58,142 @@ html #layuicss-skincodecss{display:none; position: absolute; width:1989px;}
 .layui-code-full .layui-code-item,
 .layui-code-full .layui-code-ol,
 .layui-code-full .layui-code-ul{height: calc(100vh - 51px) !important; box-sizing: border-box;}
+
+/* notepadd++风格 */
+.layui-code-notepad{border: 1px solid #0C0C0C; border-left-color: #3F3F3F; background-color: #0C0C0C; color: #C2BE9E}
+.layui-code-notepad .layui-code-h3{border-bottom: none;}
+.layui-code-notepad .layui-code-ol li{background-color: #3F3F3F; border-left: none;}
+
+
+
+
+.layui-code-diyar{font-family: 'consolas';border: none;;background-color: #4b4b4b;color: #dfdfdf;font-size: 16px;margin: 0;}
+.layui-code-diyar .layui-code-ol li{background-color: #3F3F3F; border-left: none;font-family: 'consolas';}
+.layui-code-diyar span{font-family: 'consolas';}
+.layui-code-diyar span.code_str{color: #0aed54;}
+.layui-code-diyar span.code_san{color: #00cbff;}
+.layui-code-diyar span.code_obkey{color: #ffb500;}
+
+.layui-code-custom-title{position: relative; padding: 0 10px; height: 40px; line-height: 40px; font-size: 12px;    background-color: #FAFAFA;border: 1px solid #eee;border-bottom-width: 0;border-radius: 6px 6px 0 0;}
+.layui-code-custom-title a{position: absolute; right: 10px; top: 0; color: #999;}
+.layui-code-custom-title.layui-code-diyar {border: none;font-family: 'consolas';color: #ffb500;}
+.layui-code-light{margin: 0;}
+.layui-code-preview .layui-tab-title li{-moz-user-select: none;  -webkit-user-select: none;  -ms-user-select: none;  -khtml-user-select: none;  user-select: none;}
+.layui-code-preview.diyar .layui-tab-title{background-color: #4b4b4b;}
+.layui-code-preview.diyar .layui-tab-title li{color: white;}
+.layui-code-preview.diyar .layui-tab-title .layui-this{color: #ffb500;}
+.layui-code-preview.diyar .layui-tab-title .layui-this:after{border-bottom-color: #ffb500;}
+.layui-code-preview.diyar .layui-code-tools{color: white;}
+.layui-code-preview.diyar > .layui-tab{border-radius: 8px 8px 0 0;overflow: hidden;}
+.layui-code-preview.diyar > .layui-code{border: none;}
+
+
+.diyar-formula,
+.diyar-params,
+.diyar-property {}
+.diyar-comment {color: #969896;}
+.diyar-tag {color: #b4b7b4;}
+.diyar-subst,
+.diyar-punctuation,
+.diyar-operator {color: #c5c8c6;}
+
+.diyar-operator {opacity: 0.7;}
+.diyar-bullet,
+.diyar-variable,
+.diyar-template-variable,
+.diyar-selector-tag,
+.diyar-name,
+.diyar-deletion {color: #CC342B;}
+.diyar-symbol,
+.diyar-number,
+.diyar-link,
+.diyar-attr,
+.diyar-variable.constant_,
+.diyar-literal {color: #F96A38;}
+.diyar-title,
+.diyar-class .diyar-title,
+.diyar-title.class_ {color: #FBA922;}
+
+.diyar-strong {font-weight:bold;color: #FBA922;}
+.diyar-code,
+.diyar-addition,
+.diyar-title.class_.inherited__,
+.diyar-string {color: #198844;}
+.diyar-built_in,
+.diyar-doctag, /* guessing */
+.diyar-quote,
+.diyar-keyword.diyar-atrule,
+.diyar-regexp {color: #3971ED;}
+.diyar-function .diyar-title,
+.diyar-attribute,
+.ruby .diyar-property,
+.diyar-title.function_,
+.diyar-section {color: #3971ED;}
+.diyar-type,
+.diyar-template-tag,
+.diff .diyar-meta,
+.diyar-keyword {color: #A36AC7;}
+.diyar-emphasis {color: #A36AC7;font-style: italic;}
+.diyar-meta,
+.diyar-meta .diyar-keyword,
+.diyar-meta .diyar-string {color: #3971ED;}
+.diyar-meta .diyar-keyword,
+.diyar-meta-keyword {font-weight: bold;}
+
+.light-formula,
+.light-params,
+.light-property {
+    color: #790195;
+    font-weight: bold;
+}
+.light-comment {color: #b4b7b4;}
+.light-tag {color: #969896;}
+.light-subst,
+.light-punctuation,
+.light-operator {color: #373b41;}
+.light-operator {opacity: 0.7;}
+.light-bullet,
+.light-template-variable,
+.light-selector-tag,
+.light-name,
+.light-deletion {color: #3971ED;}
+.light-symbol,
+.light-number,
+.light-link,
+.light-variable.constant_,
+.light-literal {color: #0000FF;}
+.light-variable,
+.light-attr{color: #660E7A;}
+.light-title,
+.light-class .light-title,
+.light-title.class_ {color: #FBA922;}
+.light-strong {font-weight:bold;color: #FBA922;}
+.light-code,
+.light-addition,
+.light-title.class_.inherited__,
+.light-string {color: #008b36;font-weight: 100;}
+.light-built_in,
+.light-doctag, /* guessing */
+.light-quote,
+.light-keyword.light-atrule,
+.light-regexp {color: #3971ED;}
+.light-function .light-title,
+.light-attribute,
+.ruby .light-property,
+.light-title.function_,
+.light-section {color: #7A7A43;}
+.light-type,
+.light-template-tag,
+.diff .light-meta,
+.light-keyword {
+    color: #000080;
+    font-weight: 700;
+}
+.light-emphasis {color: #A36AC7;font-style: italic;}
+.light-meta,
+.light-meta .light-keyword,
+.light-meta .light-string {color: #3971ED;}
+.light-meta .light-keyword,
+.light-meta-keyword {
+    font-weight: bold;
+}

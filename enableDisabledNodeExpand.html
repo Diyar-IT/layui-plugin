@@ -45,6 +45,8 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="expandAll"><i class="layui-icon layui-icon-shrink-right"></i> 全部展开</button>
         <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="collapse"><i class="layui-icon layui-icon-spread-left"></i> 全部折叠</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getData">获取当前页数据</button>
     </div>
 </script>
 
@@ -52,6 +54,8 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="expandAll"><i class="layui-icon layui-icon-shrink-right"></i> 全部展开</button>
         <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="collapse"><i class="layui-icon layui-icon-spread-left"></i> 全部折叠</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getData">获取当前页数据</button>
     </div>
 </script>
 <script type="text/html" id="TPL-treeTable-demo-tools">
@@ -200,17 +204,33 @@
     });
 
 
-    var event = function (event, id) {
-      treeTable.expandAll(id, event === 'expandAll', id === 'ID-treeTable-demo-2');
-    };
+    var active = {
+      expandAll: function (obj) {
+        treeTable.expandAll(obj.config.id, obj.event === 'expandAll', obj.config.id === 'ID-treeTable-demo-2');
+      },
+      collapse: function (obj) {
+        return active.expandAll(obj);
+      },
+      getCheckData: function (obj) {
+        var tableStatus = treeTable.checkStatus(obj.config.id);
+        if (!tableStatus.data.length) return layer.msg('没有选择');
+        console.log(tableStatus.data);
+        layer.alert(layui.util.escape(JSON.stringify(tableStatus.data)));
+      },
+      getData: function (obj) {
+        var getData = treeTable.getData(obj.config.id);
+        console.log(getData);
+        layer.alert(layui.util.escape(JSON.stringify(getData)));
+      }
+    }
 
     // 表头工具栏工具事件
     treeTable.on("toolbar(ID-treeTable-demo)", function (obj) {
-      event(obj.event, obj.config.id);
+      active[obj.event].call(this,obj);
     });
 
     treeTable.on("toolbar(ID-treeTable-demo-2)", function (obj) {
-      event(obj.event, obj.config.id);
+      active[obj.event].call(this,obj);
     });
 
   });

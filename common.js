@@ -1,7 +1,7 @@
 layui.config({
-  base: 'module/'
+  base: 'plugins/'
 }).extend({
-
-}).use([], function () {
-
+  photosPro : 'photosPro',
+  //hljs : 'hljs/highlight',
+  encrypt: 'encrypt'
 });

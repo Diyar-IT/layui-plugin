@@ -24,6 +24,14 @@
         layer说明文档没有相关mousedown，mousemove回调函数所以实现相册功能增加了moveStart和moving调用函数。<br>
     </blockquote>
     <pre lay-title="" class="layui-code javascript" lay-options="{lang: 'javascript'}">
+      <textarea>//mousedown调用函数代码， 大概720~750行左右
+config.moveStart && typeof config.moveStart === 'function' && config.moveStart(layero,e);
+
+//注：拖动时跟随鼠标位置上面增加mousemove调用函数代码， 大概800~820行左右
+if (config.pullSwitch && config.moving && typeof config.moving === 'function') {
+  config.moving({layero, rect: {left: X, top: Y}, event: e, config: config});
+  return false;
+}</textarea>
     </pre>
 
 

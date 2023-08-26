@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Highlight for Layui</title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="plugins/hljs/all_theme.css"/>
+    <style>
+        body {padding: 0;margin: 0;}
+        .container {padding: 0 50px;margin: 0 auto;}
+        .container .top{margin-top: 30px;font-weight: 700}
+        .container .top dd{display: inline-block;}
+        .container .top dd:first-child{margin-right: 10px;}
+        .container .top dd:last-child{margin-left: 10px;}
+        .container sup{position: relative;left: 5px;margin-right: 10px;padding: 1px 3px;border-radius: 3px;background-color: #ff5722;color: #fff;font-weight: 700;font-size: 12px;}
+        .container .main{margin-top: 40px;}
+        .container .main .actions{display: flex; position: relative;margin-top: 10px;}
+        .container .main .left{min-width: 480px;padding-right: 20px;}
+        .container .main .right{flex: 1;min-width: 200px;}
+        .container .main .action-inline{margin-bottom: 10px;}
+        .container .main .action-inline .label{font-size: 18px;}
+        .container .main .action-inline .item{margin-top: 10px;}
+        .layui-btn{color: #fff;background-color: #07c160;border: 1px solid #07c160;border-radius: 6px;}
+        .demo-code{height: calc(100% - 40px)}
+        .demo-code .layui-tab{margin: 0;}
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="top layui-font-32">
+        <dd>highlight.js<sup></sup></dd>For<dd style="color: #16baaa;">Layui<sup></sup></dd>
+    </div>
+    <div class="main">
+        <div class="layui-font-26" style="height: 36px;line-height: 36px;"><span>Demo</span><span class="code-type layui-font-22" style="float: right;">TEXT</span></div>
+        <div class="actions">
+            <div class="left layui-form" lay-filter="action-hljs">
+                <div class="action-inline">
+                    <label class="label"><span>Language</span><span class="language-count" style="float: right;font-size: 14px;"></span></label>
+                    <div class="item">
+                        <select lay-search="" lay-filter="onChangeLanguage"><option>auto</option><option>1c</option><option>abnf</option><option>accesslog</option><option>actionscript</option><option>ada</option><option>angelscript</option><option>apache</option><option>applescript</option><option>arcade</option><option>arduino</option><option>armasm</option><option>xml</option><option>asciidoc</option><option>aspectj</option><option>autohotkey</option><option>autoit</option><option>avrasm</option><option>awk</option><option>axapta</option><option>bash</option><option>basic</option><option>bnf</option><option>brainfuck</option><option>c</option><option>cal</option><option>capnproto</option><option>ceylon</option><option>clean</option><option>clojure</option><option>clojure-repl</option><option>cmake</option><option>coffeescript</option><option>coq</option><option>cos</option><option>cpp</option><option>crmsh</option><option>crystal</option><option>csharp</option><option>csp</option><option>css</option><option>d</option><option>markdown</option><option>dart</option><option>delphi</option><option>diff</option><option>django</option><option>dns</option><option>dockerfile</option><option>dos</option><option>dsconfig</option><option>dts</option><option>dust</option><option>ebnf</option><option>elixir</option><option>elm</option><option>ruby</option><option>erb</option><option>erlang-repl</option><option>erlang</option><option>excel</option><option>fix</option><option>flix</option><option>fortran</option><option>fsharp</option><option>gams</option><option>gauss</option><option>gcode</option><option>gherkin</option><option>glsl</option><option>gml</option><option>go</option><option>golo</option><option>gradle</option><option>graphql</option><option>groovy</option><option>haml</option><option>handlebars</option><option>haskell</option><option>haxe</option><option>hsp</option><option>http</option><option>hy</option><option>inform7</option><option>ini</option><option>irpf90</option><option>isbl</option><option>java</option><option>javascript</option><option>jboss-cli</option><option>json</option><option>julia</option><option>julia-repl</option><option>kotlin</option><option>lasso</option><option>latex</option><option>ldif</option><option>leaf</option><option>less</option><option>lisp</option><option>livecodeserver</option><option>livescript</option><option>llvm</option><option>lsl</option><option>lua</option><option>makefile</option><option>mathematica</option><option>matlab</option><option>maxima</option><option>mel</option><option>mercury</option><option>mipsasm</option><option>mizar</option><option>perl</option><option>mojolicious</option><option>monkey</option><option>moonscript</option><option>n1ql</option><option>nestedtext</option><option>nginx</option><option>nim</option><option>nix</option><option>node-repl</option><option>nsis</option><option>objectivec</option><option>ocaml</option><option>openscad</option><option>oxygene</option><option>parser3</option><option>pf</option><option>pgsql</option><option>php</option><option>php-template</option><option>plaintext</option><option>pony</option><option>powershell</option><option>processing</option><option>profile</option><option>prolog</option><option>properties</option><option>protobuf</option><option>puppet</option><option>purebasic</option><option>python</option><option>python-repl</option><option>q</option><option>qml</option><option>r</option><option>reasonml</option><option>rib</option><option>roboconf</option><option>routeros</option><option>rsl</option><option>ruleslanguage</option><option>rust</option><option>sas</option><option>scala</option><option>scheme</option><option>scilab</option><option>scss</option><option>shell</option><option>smali</option><option>smalltalk</option><option>sml</option><option>sqf</option><option>sql</option><option>stan</option><option>stata</option><option>step21</option><option>stylus</option><option>subunit</option><option>swift</option><option>taggerscript</option><option>yaml</option><option>tap</option><option>tcl</option><option>thrift</option><option>tp</option><option>twig</option><option>typescript</option><option>vala</option><option>vbnet</option><option>vbscript</option><option>vbscript-html</option><option>verilog</option><option>vhdl</option><option>vim</option><option>wasm</option><option>wren</option><option>x86asm</option><option>xl</option><option>xquery</option><option>zephir</option></select>
+                    </div>
+                </div>
+                <div class="action-inline">
+                    <label class="label"><span>Theme</span><span class="theme-count" style="float: right;font-size: 14px;"></span></label>
+                    <div class="item">
+                        <select lay-search="" lay-filter="onChangeTheme"><option>a11y-dark</option><option>a11y-light</option><option>agate</option><option>an-old-hope</option><option>androidstudio</option><option>arduino-light</option><option>arta</option><option>ascetic</option><option>atom-one-dark-reasonable</option><option>atom-one-dark</option><option>atom-one-light</option><option>base16-3024</option><option>base16-apathy</option><option>base16-apprentice</option><option>base16-ashes</option><option>base16-atelier-cave-light</option><option>base16-atelier-cave</option><option>base16-atelier-dune-light</option><option>base16-atelier-dune</option><option>base16-atelier-estuary-light</option><option>base16-atelier-estuary</option><option>base16-atelier-forest-light</option><option>base16-atelier-forest</option><option>base16-atelier-heath-light</option><option>base16-atelier-heath</option><option>base16-atelier-lakeside-light</option><option>base16-atelier-lakeside</option><option>base16-atelier-plateau-light</option><option>base16-atelier-plateau</option><option>base16-atelier-savanna-light</option><option>base16-atelier-savanna</option><option>base16-atelier-seaside-light</option><option>base16-atelier-seaside</option><option>base16-atelier-sulphurpool-light</option><option>base16-atelier-sulphurpool</option><option>base16-atlas</option><option>base16-bespin</option><option>base16-black-metal-bathory</option><option>base16-black-metal-burzum</option><option>base16-black-metal-dark-funeral</option><option>base16-black-metal-gorgoroth</option><option>base16-black-metal-immortal</option><option>base16-black-metal-khold</option><option>base16-black-metal-marduk</option><option>base16-black-metal-mayhem</option><option>base16-black-metal-nile</option><option>base16-black-metal-venom</option><option>base16-black-metal</option><option>base16-brewer</option><option>base16-bright</option><option>base16-brogrammer</option><option>base16-brush-trees-dark</option><option>base16-brush-trees</option><option>base16-chalk</option><option>base16-circus</option><option>base16-classic-dark</option><option>base16-classic-light</option><option>base16-codeschool</option><option>base16-colors</option><option>base16-cupcake</option><option>base16-cupertino</option><option>base16-danqing</option><option>base16-darcula</option><option>base16-dark-violet</option><option>base16-darkmoss</option><option>base16-darktooth</option><option>base16-decaf</option><option>base16-default-dark</option><option>base16-default-light</option><option>base16-dirtysea</option><option>base16-dracula</option><option>base16-edge-dark</option><option>base16-edge-light</option><option>base16-eighties</option><option>base16-embers</option><option>base16-equilibrium-dark</option><option>base16-equilibrium-gray-dark</option><option>base16-equilibrium-gray-light</option><option>base16-equilibrium-light</option><option>base16-espresso</option><option>base16-eva-dim</option><option>base16-eva</option><option>base16-flat</option><option>base16-framer</option><option>base16-fruit-soda</option><option>base16-gigavolt</option><option>base16-github</option><option>base16-google-dark</option><option>base16-google-light</option><option>base16-grayscale-dark</option><option>base16-grayscale-light</option><option>base16-green-screen</option><option>base16-gruvbox-dark-hard</option><option>base16-gruvbox-dark-medium</option><option>base16-gruvbox-dark-pale</option><option>base16-gruvbox-dark-soft</option><option>base16-gruvbox-light-hard</option><option>base16-gruvbox-light-medium</option><option>base16-gruvbox-light-soft</option><option>base16-hardcore</option><option>base16-harmonic16-dark</option><option>base16-harmonic16-light</option><option>base16-heetch-dark</option><option>base16-heetch-light</option><option>base16-helios</option><option>base16-hopscotch</option><option>base16-horizon-dark</option><option>base16-horizon-light</option><option>base16-humanoid-dark</option><option>base16-humanoid-light</option><option>base16-ia-dark</option><option>base16-ia-light</option><option>base16-icy-dark</option><option>base16-ir-black</option><option>base16-isotope</option><option>base16-kimber</option><option>base16-london-tube</option><option>base16-macintosh</option><option>base16-marrakesh</option><option>base16-materia</option><option>base16-material-darker</option><option>base16-material-lighter</option><option>base16-material-palenight</option><option>base16-material-vivid</option><option>base16-material</option><option>base16-mellow-purple</option><option>base16-mexico-light</option><option>base16-mocha</option><option>base16-monokai</option><option>base16-nebula</option><option>base16-nord</option><option>base16-nova</option><option>base16-ocean</option><option>base16-oceanicnext</option><option>base16-one-light</option><option>base16-onedark</option><option>base16-outrun-dark</option><option>base16-papercolor-dark</option><option>base16-papercolor-light</option><option>base16-paraiso</option><option>base16-pasque</option><option>base16-phd</option><option>base16-pico</option><option>base16-pop</option><option>base16-porple</option><option>base16-qualia</option><option>base16-railscasts</option><option>base16-rebecca</option><option>base16-ros-pine-dawn</option><option>base16-ros-pine-moon</option><option>base16-ros-pine</option><option>base16-sagelight</option><option>base16-sandcastle</option><option>base16-seti-ui</option><option>base16-shapeshifter</option><option>base16-silk-dark</option><option>base16-silk-light</option><option>base16-snazzy</option><option>base16-solar-flare-light</option><option>base16-solar-flare</option><option>base16-solarized-dark</option><option>base16-solarized-light</option><option>base16-spacemacs</option><option>base16-summercamp</option><option>base16-summerfruit-dark</option><option>base16-summerfruit-light</option><option>base16-synth-midnight-terminal-dark</option><option>base16-synth-midnight-terminal-light</option><option>base16-tango</option><option>base16-tender</option><option>base16-tomorrow-night</option><option>base16-tomorrow</option><option>base16-twilight</option><option>base16-unikitty-dark</option><option>base16-unikitty-light</option><option>base16-vulcan</option><option>base16-windows-10-light</option><option>base16-windows-10</option><option>base16-windows-95-light</option><option>base16-windows-95</option><option>base16-windows-high-contrast-light</option><option>base16-windows-high-contrast</option><option>base16-windows-nt-light</option><option>base16-windows-nt</option><option>base16-woodland</option><option>base16-xcode-dusk</option><option>base16-zenburn</option><option>brown-paper</option><option>codepen-embed</option><option>color-brewer</option><option>dark</option><option>default</option><option>devibeans</option><option>docco</option><option>far</option><option>felipec</option><option>foundation</option><option>github-dark-dimmed</option><option>github-dark</option><option>github</option><option>gml</option><option>googlecode</option><option>gradient-dark</option><option>gradient-light</option><option>grayscale</option><option>hybrid</option><option>idea</option><option>intellij-light</option><option>ir-black</option><option>isbl-editor-dark</option><option>isbl-editor-light</option><option>kimbie-dark</option><option>kimbie-light</option><option>lightfair</option><option>lioshi</option><option>magula</option><option>mono-blue</option><option>monokai-sublime</option><option>monokai</option><option>night-owl</option><option>nnfx-dark</option><option>nnfx-light</option><option>nord</option><option>obsidian</option><option>panda-syntax-dark</option><option>panda-syntax-light</option><option>paraiso-dark</option><option>paraiso-light</option><option>pojoaque</option><option>purebasic</option><option>qtcreator-dark</option><option>qtcreator-light</option><option>rainbow</option><option>routeros</option><option>school-book</option><option>shades-of-purple</option><option>srcery</option><option>stackoverflow-dark</option><option>stackoverflow-light</option><option>sunburst</option><option>tokyo-night-dark</option><option>tokyo-night-light</option><option>tomorrow-night-blue</option><option>tomorrow-night-bright</option><option>vs</option><option selected>vs2015</option><option>xcode</option><option>xt256</option></select>
+                    </div>
+                </div>
+                <div class="action-inline">
+                    <button type="button" class="layui-btn" lay-event="share">Share</button>
+                </div>
+                <div class="action-inline" style="margin-bottom: 0;">
+                    <label class="label">Code</label>
+                    <div class="item">
+                        <textarea id="code-textarea" style="min-height: 485px;" class="layui-textarea"><script>
+// Usage
+layui.use(function(){
+  var layer = layui.layer;
+  // Welcome
+  layer.msg('Hello World', {icon: 6});
+});
+</script></textarea>
+                    </div>
+                </div>
+                <div class="action-inline" style="margin-bottom: 0;">
+                    <label class="label" style="font-size: 14px;color: gray;">Diyar-IT(地亚尔-IT)</label>
+                </div>
+            </div>
+            <div class="right layui-code-theme theme-vs2015">
+                <pre class="layui-code" style="margin: 0;height: calc(100% - 20px);box-shadow: 4px 5px 8px 3px #5c5c5c4f;"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="libs/require.js"></script>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="common.js"></script>
+<script type="text/javascript" src="plugins/hljs/highlight.js"></script>
+<script type="text/javascript">
+  layui.use(['code', 'form', 'util', 'encrypt'], function () {
+    var $ = layui.$;
+    var form = layui.form;
+    var util = layui.util;
+    var language = 'javascript';
+    var style = 'vs2015';
+    var codeTextarea = $('#code-textarea');
+    var langSelect = $('select[lay-filter="onChangeLanguage"] option');
+    var themSelect = $('select[lay-filter="onChangeTheme"] option');
+
+
+    var sups = $('.container sup');
+    sups.eq(0).text(hljs.versionString);
+    sups.eq(1).text(layui.v);
+
+    $('.language-count').text('支持~'+ langSelect.length + '多种语言');
+    $('.theme-count').text('目前有' + themSelect.length + '个主题');
+
+    require.config({baseUrl: "plugins/hljs/languages"});
+
+    var parseCode = function (str) {
+      var obj = language === 'auto' ?  hljs.highlightAuto(str.trim()) : hljs.highlight(str.trim(), {language : language});
+      var html = obj.value.replace(/[\r\t\n]+/g, '</li><li>'); // 转义换行符
+      $('.layui-code .layui-code-ol').html('<li>' + html + '</li>');
+      $('span.code-type').text(obj.language ? obj.language.toUpperCase() : 'TEXT');
+    }
+
+    var loadLanguage = function (str) {
+      if (language === 'auto') return parseCode(str);
+      var langlist = hljs.listLanguages();
+      if (langlist.indexOf(language) !== -1){
+        parseCode(str);
+      }else {
+        require([language + '.min'], function () {
+          parseCode(str);
+        });
+      }
+    }
+
+    layui.code({
+      elem: '.container .layui-code',
+      preview: true,
+      skin: 'diyar',
+      encode: false,
+      header:false,
+      lang: 'TEXT',
+      layout: ['code'],
+      tools: ['full','copy'],
+      className: 'demo-code',
+      onCopy: function () {
+        var text = document.createElement("textarea");
+        text.setAttribute("readonly", "readonly");
+        text.setAttribute("value", codeTextarea.val());
+        document.body.appendChild(text);
+        text.select();
+        if (document.execCommand("copy")){
+          layer.msg('已复制', {icon: 1});
+        }else {
+          layer.msg('复制失败', {icon: 2});
+        }
+        document.body.removeChild(text);
+      }
+    });
+
+    var hash = location.hash;
+    if (hash){
+      var param = {};
+      hash = hash.substr(1,hash.length);
+      layui.each(hash.split('&'), function (index, item) {
+        if (!/^\w+=/.test(item)) return false;
+        item = item.split('=');
+        param[item[0]] = item[1];
+      });
+      if (param.code){
+        var decode = layui.encrypt.Base64Decode(decodeURIComponent(param.code));
+        codeTextarea.val(decode);
+      }
+      if (param.lang){
+        language = param.lang;
+        langSelect.each(function () {
+          $(this).attr('selected', this.text === language)
+        });
+      }
+
+      if (param.theme){
+        style = param.theme;
+        themSelect.each(function () {
+          $(this).attr('selected', this.text === style)
+        });
+      }
+    }
+
+    if (codeTextarea.val()){
+      loadLanguage(codeTextarea.val());
+    }
+
+    codeTextarea.on('input propertychange', function () {
+      loadLanguage(this.value);
+    });
+
+    form.on('select(onChangeTheme)', function (obj) {
+      style = obj.value;
+      $('.layui-code-theme').attr('class','right layui-code-theme theme-' + style);
+    });
+
+    form.on('select(onChangeLanguage)', function (obj) {
+      language = obj.value.replaceAll(/\(\)/gi,'');
+      // if (language === '(auto)') return;
+      loadLanguage(codeTextarea.val())
+    });
+
+    util.on('lay-event', {
+      share: function () {
+        var param = new URLSearchParams();
+        param.set('lang',language);
+        param.set('theme',style);
+        if (codeTextarea.val().trim()){
+          var encode = layui.encrypt.Base64Encode(codeTextarea.val().toString().trim());
+          param.set('code', encode);
+        }
+        location.hash = param.toString();
+      }
+    });
+
+    form.render(null, 'action-hljs');
+  });
+</script>
+</body>
+</html>

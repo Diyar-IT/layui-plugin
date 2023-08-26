@@ -68,7 +68,7 @@ layui.use(function(){
                 </div>
             </div>
             <div class="right layui-code-theme theme-vs2015">
-                <pre class="layui-code" style="margin: 0;height: calc(100% - 20px);box-shadow: 4px 5px 8px 3px #5c5c5c4f;"></pre>
+                <pre class="layui-code" style="margin: 0;height: 680px;;box-shadow: 4px 5px 8px 3px #5c5c5c4f;"></pre>
             </div>
         </div>
     </div>
@@ -89,15 +89,17 @@ layui.use(function(){
     var langSelect = $('select[lay-filter="onChangeLanguage"] option');
     var themSelect = $('select[lay-filter="onChangeTheme"] option');
 
-
     var sups = $('.container sup');
     sups.eq(0).text(hljs.versionString);
     sups.eq(1).text(layui.v);
 
-    $('.language-count').text('支持~'+ langSelect.length + '多种语言');
-    $('.theme-count').text('目前有' + themSelect.length + '个主题');
-
     require.config({baseUrl: "plugins/hljs/languages"});
+    var pageProps;
+    $.get('plugins/hljs/examples.json', function (data) {
+      pageProps = data ? data.pageProps : {};
+      $('.language-count').text('支持~'+ (pageProps ? pageProps.totalCount : langSelect.length) + '多种语言');
+      $('.theme-count').text('目前有' + themSelect.length + '个主题');
+    });
 
     var parseCode = function (str) {
       var obj = language === 'auto' ?  hljs.highlightAuto(str.trim()) : hljs.highlight(str.trim(), {language : language});
@@ -187,7 +189,11 @@ layui.use(function(){
     form.on('select(onChangeLanguage)', function (obj) {
       language = obj.value.replaceAll(/\(\)/gi,'');
       // if (language === '(auto)') return;
-      loadLanguage(codeTextarea.val())
+      var code = codeTextarea.val();
+      if (code === ''){
+        code = pageProps.snippets[language] || '';
+      }
+      loadLanguage(code);
     });
 
     util.on('lay-event', {

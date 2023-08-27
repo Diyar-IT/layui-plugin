@@ -155,31 +155,46 @@ layui.define('jquery', function(exports){
     // Tab 删除
     ,tabDelete: function(e, othis){
       var li = othis || $(this).parent();
+      var opts = lay.options(li);
       var index = li.parent().children('li').index(li);
       var tabElem = li.closest('.layui-tab');
       var item = tabElem.children('.layui-tab-content').children('.layui-tab-item');
       var filter = tabElem.attr('lay-filter');
       
-      if(li.hasClass(THIS)){
-        if (li.next()[0] && li.next().is('li')){
-          call.tabClick.call(li.next()[0], {
-            index: index + 1
-          });
-        } else if (li.prev()[0] && li.prev().is('li')){
-          call.tabClick.call(li.prev()[0], null, index - 1);
+      var tabDelete = function () {
+
+        if(li.hasClass(THIS)){
+          if (li.next()[0] && li.next().is('li')){
+            call.tabClick.call(li.next()[0], {
+              index: index + 1
+            });
+          } else if (li.prev()[0] && li.prev().is('li')){
+            call.tabClick.call(li.prev()[0], null, index - 1);
+          }
         }
+
+        li.remove();
+        item.eq(index).remove();
+        setTimeout(function(){
+          call.tabAuto();
+        }, 50);
+
+        layui.event.call(this, MOD_NAME, 'tabDelete('+ filter +')', {
+          elem: tabElem,
+          index: index
+        });
       }
-      
-      li.remove();
-      item.eq(index).remove();
-      setTimeout(function(){
-        call.tabAuto();
-      }, 50);
-      
-      layui.event.call(this, MOD_NAME, 'tabDelete('+ filter +')', {
-        elem: tabElem,
-        index: index
-      });
+
+      if (opts.cnfrim){
+        layui.event.call(this, MOD_NAME, 'onDeleteTab('+ filter +')', {
+          elem: tabElem,
+          index: index,
+          li : li,
+          deleteTab : tabDelete
+        });
+        return false;
+      }
+      tabDelete();
     }
     
     // Tab 自适应

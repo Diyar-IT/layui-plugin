@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Layui Textarea</title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="layui/css/common.css"/>
+    <link rel="stylesheet" href="plugins/hljs/all_theme.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <dd style="color: #16baaa;">Layui<sup id="layui_version"></sup></dd>
+        <dd>Textarea</dd>
+    </div>
+    <div class="theme-base16-unikitty-light">
+        <pre class="layui-code code-demo"  lay-options="{id: 'textarea-demo-1',preview: true,encode:false, codeStyle: 'height: 500px;overflow: auto;', skin:'diyar-light', layout: ['preview', 'code'], tools: ['full'], done: function(obj){obj.render();}}">
+  <textarea>
+<div class="layui-form">
+  &lt;textarea name="" placeholder="多行文本框" lay-affix="clear" show-count style="min-height: 200px;" class="layui-textarea"&gt;&lt;/textarea&gt;
+  <hr class="ws-space-16">
+  <div style="width:600px;">
+    &lt;textarea name="" placeholder="多行文本框" lay-affix="clear" maxlength="50" show-count style="min-height: 100px;" class="layui-textarea"&gt;&lt;/textarea&gt;
+  </div>
+  <hr class="ws-space-16">
+  <div style="width:300px;">
+    &lt;textarea name="" placeholder="多行文本框" lay-affix="clear" maxlength="10" show-count style="min-height: 100px;" class="layui-textarea"&gt;&lt;/textarea&gt;
+  </div>
+</div>
+  </textarea>
+        </pre>
+    </div>
+</div>
+
+<script type="text/javascript" src="libs/require.js"></script>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="common.js"></script>
+<script type="text/javascript" src="plugins/hljs/highlight.js"></script>
+<script type="text/javascript">
+    layui.use(['code', 'util'], function () {
+      var $ = layui.$;
+      var code = layui.code;
+      var util = layui.util;
+
+      $('#layui_version').text(layui.v);
+      require.config({baseUrl: "plugins/hljs/languages"});
+      require(['xml.min'], function () {
+        layui.code({
+          codeRender(code) {
+            return hljs.highlight(code, {language : 'xml'}).value;
+          }
+        });
+      });
+
+    });
+</script>
+</body>
+</html>

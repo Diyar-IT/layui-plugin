@@ -87,6 +87,9 @@ html #layuicss-skincodecss{display:none; position: absolute; width:1989px;}
 .layui-code-preview.diyar > .layui-tab{border-radius: 8px 8px 0 0;overflow: hidden;}
 .layui-code-preview.diyar > .layui-code{border: none;}
 
+.layui-code-preview.diyar-light .layui-tab-title{background-color: #f8f8f8;margin: 0;}
+.layui-code-preview.diyar-light .layui-tab{border-radius: 8px 8px 0 0;overflow: hidden;}
+.layui-code-preview.diyar-light.layui-code-full .layui-tab{margin: 0;}
 
 .diyar-formula,
 .diyar-params,

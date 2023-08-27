@@ -306,9 +306,10 @@ layui.define(['lay', 'util', 'element', 'form'], function (exports) {
       }
 
       // 转义 HTML 标签
-      if (options.encode) html = util.escape(html); // 编码
+      if (options.encode && !options.codeRender) html = util.escape(html); // 编码
+      //code 转 html
+      if (options.codeRender) html = options.codeRender(html);
       html = html.replace(/[\r\t\n]+/g, '</li><li>'); // 转义换行符
-
       // 生成列表
       othis.html(listElem.html('<li>' + html + '</li>'));
 

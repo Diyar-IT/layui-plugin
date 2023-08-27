@@ -168,6 +168,7 @@ layui.use(function(){
 
       if (param.theme){
         style = param.theme;
+        $('.layui-code-theme').attr('class','right layui-code-theme theme-' + style);
         themSelect.each(function () {
           $(this).attr('selected', this.text === style)
         });

@@ -1,0 +1,305 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3061898 */
+  src: url('iconfont.eot?t=1692289463073'); /* IE9 */
+  src: url('iconfont.eot?t=1692289463073#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1692289463073') format('woff2'),
+       url('iconfont.woff?t=1692289463073') format('woff'),
+       url('iconfont.ttf?t=1692289463073') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.diyar-shopping_cart:before {
+  content: "\e615";
+}
+
+.diyar-shopping_cart_cur:before {
+  content: "\e617";
+}
+
+.diyar-menu_cur:before {
+  content: "\e67d";
+}
+
+.diyar-notsmile-o:before {
+  content: "\e61b";
+}
+
+.diyar-notsmile:before {
+  content: "\e61d";
+}
+
+.diyar-fanzhuanjingtou:before {
+  content: "\e872";
+}
+
+.diyar-reduce:before {
+  content: "\ec13";
+}
+
+.diyar-amplify:before {
+  content: "\ec14";
+}
+
+.diyar-move:before {
+  content: "\e616";
+}
+
+.diyar-wechat-pay-fill:before {
+  content: "\e635";
+}
+
+.diyar-chemberek:before {
+  content: "\e68c";
+}
+
+.diyar-wechat-pay:before {
+  content: "\e612";
+}
+
+.diyar-weapp:before {
+  content: "\e61a";
+}
+
+.diyar-weapp-fill:before {
+  content: "\e641";
+}
+
+.diyar-satellite-signal-full:before {
+  content: "\e959";
+}
+
+.diyar-weixing:before {
+  content: "\e619";
+}
+
+.diyar-ems:before {
+  content: "\e611";
+}
+
+.diyar-yunfei:before {
+  content: "\e6e2";
+}
+
+.diyar-sf:before {
+  content: "\e8ce";
+}
+
+.diyar-logo_sf:before {
+  content: "\e629";
+}
+
+.diyar-tongzhi:before {
+  content: "\e647";
+}
+
+.diyar-dukan:before {
+  content: "\e83d";
+}
+
+.diyar-notfiy:before {
+  content: "\e60e";
+}
+
+.diyar-laba:before {
+  content: "\e60d";
+}
+
+.diyar-waimai-fill:before {
+  content: "\e634";
+}
+
+.diyar-jinkoushangpin:before {
+  content: "\e605";
+}
+
+.diyar-shenpi:before {
+  content: "\e680";
+}
+
+.diyar-shangpin:before {
+  content: "\e888";
+}
+
+.diyar-xianxing:before {
+  content: "\e891";
+}
+
+.diyar-huobifenxi:before {
+  content: "\e609";
+}
+
+.diyar-tongji:before {
+  content: "\e60b";
+}
+
+.diyar-ico:before {
+  content: "\e639";
+}
+
+.diyar-shenpi1:before {
+  content: "\e60c";
+}
+
+.diyar-purse:before {
+  content: "\e8c5";
+}
+
+.diyar-shipin:before {
+  content: "\e640";
+}
+
+.diyar-buy:before {
+  content: "\e601";
+}
+
+.diyar-noqta:before {
+  content: "\e610";
+}
+
+.diyar-addnew:before {
+  content: "\e602";
+}
+
+.diyar-oknew:before {
+  content: "\e613";
+}
+
+.diyar-windows:before {
+  content: "\e60f";
+}
+
+.diyar-qrcode:before {
+  content: "\e642";
+}
+
+.diyar-barcode:before {
+  content: "\e607";
+}
+
+.diyar-pdf-file:before {
+  content: "\e740";
+}
+
+.diyar-file-word:before {
+  content: "\e7ba";
+}
+
+.diyar-show-fill:before {
+  content: "\e622";
+}
+
+.diyar-images-fill:before {
+  content: "\e621";
+}
+
+.diyar-qurlush-manager:before {
+  content: "\e608";
+}
+
+.diyar-rar-fill:before {
+  content: "\e716";
+}
+
+.diyar-materyal-qurlush:before {
+  content: "\e61c";
+}
+
+.diyar-video-fill:before {
+  content: "\e791";
+}
+
+.diyar-bg-word:before {
+  content: "\e63f";
+}
+
+.diyar-exel2x:before {
+  content: "\e644";
+}
+
+.diyar-loaction:before {
+  content: "\e87e";
+}
+
+.diyar-guizeyinqing:before {
+  content: "\ec53";
+}
+
+.diyar-delete:before {
+  content: "\e60a";
+}
+
+.diyar-modfiy:before {
+  content: "\e63e";
+}
+
+.diyar-shows:before {
+  content: "\e7b9";
+}
+
+.diyar-diyarinc:before {
+  content: "\e603";
+}
+
+.diyar-testiqlash:before {
+  content: "\e7e2";
+}
+
+.diyar-jindu:before {
+  content: "\e643";
+}
+
+.diyar-mashina:before {
+  content: "\e6c3";
+}
+
+.diyar-liucheng:before {
+  content: "\e86b";
+}
+
+.diyar-payicon:before {
+  content: "\e64d";
+}
+
+.diyar-qurlush:before {
+  content: "\e604";
+}
+
+.diyar-print:before {
+  content: "\e630";
+}
+
+.diyar-tianshenpi:before {
+  content: "\eb67";
+}
+
+.diyar-redeclaration:before {
+  content: "\e614";
+}
+
+.diyar-speedofprogress:before {
+  content: "\e606";
+}
+
+.diyar-progressone:before {
+  content: "\e669";
+}
+
+.diyar-declare:before {
+  content: "\f74c";
+}
+
+.diyar-termination:before {
+  content: "\e600";
+}
+
+.diyar-declareone:before {
+  content: "\e618";
+}
+

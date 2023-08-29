@@ -803,7 +803,18 @@ a cite{font-style: normal; *cursor:pointer;}
 .layui-input-wrap .layui-input[type="number"]::-webkit-inner-spin-button{-webkit-appearance: none !important;}
 .layui-input-wrap .layui-input[type="number"]{-moz-appearance: textfield;}
 
+/* 文本框信息 */
+.layui-input-affix-text{width: 36px;}
+.layui-input-affix-isim .affix-text,
+.layui-input-affix-button .affix-text,
+.layui-input-affix-text .affix-text{position: absolute;top: 1px;bottom: 1px;right: 1px;height: 36px;line-height: 36px;background: #fafafa;border-left-width: 1px;border-left-color: #eee;border-left-style: solid;min-width: 30px;text-align: center;width: 36px;}
+.layui-input-affix-isim{width: 28px;}
+.layui-input-affix-button .affix-text,
+.layui-input-affix-isim .affix-text{cursor: pointer;pointer-events: auto;width: 28px;min-width: 28px;-moz-user-select: none;  -webkit-user-select: none;  -ms-user-select: none;  -khtml-user-select: none;  user-select: none;}
+.layui-input-affix-button .affix-text{width: 38px;max-width: 38px;}
+
 .layui-textarea-count{color: inherit;white-space: nowrap;pointer-events: none;text-align: right;margin-top: 4px;height: 16px;line-height: 16px;}
+
 
 /* 下拉选择 */
 .layui-form-select{position: relative; color: #5F5F5F;}

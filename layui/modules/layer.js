@@ -1580,6 +1580,8 @@
         left: offsetLeft,
         width: image.width,
         height : image.height,
+      }).find('.layui-layer-content').css({
+        height: image.height
       });
     }
 

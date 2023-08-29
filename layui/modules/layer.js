@@ -808,7 +808,7 @@
           config.moving({layero, rect: {left: X, top: Y}, event: e, config: config});
           return false;
         }
-        // 拖动时跟随鼠标位置
+        //拖动时跟随鼠标位置
         layero.css({left: X, top: Y});
 
       }
@@ -1414,9 +1414,19 @@
 
   // 相册层
   layer.photos = function (options, loop) {
-    var dict = {};
+    var dict = {
+      images: {},
+      distance: 140
+    };
+
     options = options || {};
     if (!options.photos) return;
+
+    // 默认属性
+    options = $.extend(true, {
+      toolbar: true,
+      footer: true
+    }, options);
 
     // 若 photos 并非选择器或 jQuery 对象，则为普通 object
     var isObject = !(typeof options.photos === 'string' || options.photos instanceof $);
@@ -1425,8 +1435,7 @@
     var start = photos.start || 0;
 
     dict.imgIndex = (start | 0) + 1;
-    dict.images = {};
-    dict.distance = 140;
+    dict.distance = options.distance || dict.distance;
     options.img = options.img || 'img';
     options.thumbBar = options.thumbBar || false;
     options.srcUseThumb = options.srcUseThumb || false;
@@ -1453,14 +1462,16 @@
       if (data.length === 0) return;
 
       parent.on('click', options.img, function () {
-        var othis = $(this), index = othis.attr('layer-index');
+        var othis = $(this);
+        var index = othis.attr('layer-index');
         layer.photos($.extend(options, {
           photos: {
             start: index,
             data: data,
             tab: options.tab
-          }
-        }));
+          },
+          full: options.full
+        }), true);
       });
 
       // 不直接弹出
@@ -1471,7 +1482,7 @@
     }
 
     // 上一张
-    dict.imgprev = function (key) {
+    dict.prevImage = function (key) {
       dict.imgIndex--;
       if (dict.imgIndex < 1) {
         dict.imgIndex = data.length;
@@ -1479,12 +1490,12 @@
       dict.switchImage(key);
       //dict.restImageAttr(dict.imgIndex + 1);
       if (options.thumbBar){
-        dict.setListScroll(dict.layero.find('.layui-layer-images-thumb-item[data-index="'+ (dict.imgIndex - 1) +'"]'));
+        dict.setListScroll(dict.layero.find('.photos-thumb-item[data-index="'+ (dict.imgIndex - 1) +'"]'));
       }
     };
 
     // 下一张
-    dict.imgnext = function (key, errorMsg) {
+    dict.nextImage = function (key, errorMsg) {
       dict.imgIndex++;
       if (dict.imgIndex > data.length) {
         dict.imgIndex = 1;
@@ -1495,14 +1506,14 @@
       dict.switchImage(key);
 
       if (options.thumbBar){
-        dict.setListScroll(dict.layero.find('.layui-layer-images-thumb-item[data-index="'+ (dict.imgIndex - 1) +'"]'));
+        dict.setListScroll(dict.layero.find('.photos-thumb-item[data-index="'+ (dict.imgIndex - 1) +'"]'));
       }
       //dict.restImageAttr(dict.imgIndex - 1);
     };
 
     // 设置thumb位置
     dict.setListScroll = function (elem) {
-      var listElem = elem.parents('.layui-layer-images-thumb');
+      var listElem = elem.parents('.layui-layer-photos-thumb');
       var autoLeft = elem.outerWidth() * dict.imgIndex - 1;
       listElem.animate({
         scrollLeft: autoLeft - listElem.width() / 3
@@ -1527,39 +1538,17 @@
       }
     }
 
-    // 方向键
-    dict.keyup = function (event) {
-      if (!dict.end) {
-        var code = event.keyCode;
-        event.preventDefault();
-        if (code === 37) {
-          dict.imgprev(true);
-        } else if (code === 39) {
-          dict.imgnext(true);
-        } else if (code === 27) {
-          layer.close(dict.index);
-        }
-      }
-    }
-
-    // 切换
-    dict.tabimg = function (key) {
-      if (data.length <= 1) return;
-      photos.start = dict.imgIndex - 1;
-      layer.close(dict.index);
-      return layer.photos(options, true, key);
-    }
-
-    // 判断数字
+    // 数字判断
     dict.isNumber = function (n) {
       return typeof n === 'number' && !isNaN(n);
     }
 
     // 图片css样式
-    dict.getTransform = function (options) {
+    dict.getTransform = function (opts) {
       var transforms = [];
-      var rotate = options.rotate;
-      var scaleX = options.scaleX;
+      var rotate = opts.rotate;
+      var scaleX = opts.scaleX;
+      var scale = opts.scale;
 
       if (dict.isNumber(rotate) && rotate !== 0) {
         transforms.push('rotate(' + rotate + 'deg)');
@@ -1569,11 +1558,16 @@
         transforms.push('scaleX(' + scaleX + ')');
       }
 
+      if (dict.isNumber(scale)) {
+        transforms.push('scale(' + scale + ')');
+      }
+
       return transforms.length ? transforms.join(' ') : 'none';
     }
 
     // 重设窗口位置和大小
-    dict.setArea = function (image) {
+    dict.setArea = function () {
+      var image = dict.images[dict.imgIndex];
       var offsetTop = (win.height() - image.height) / 2;
       var offsetLeft = (win.width() - image.width) / 2;
       if (dict.isMove){
@@ -1584,8 +1578,8 @@
       dict.layero.css({
         top: offsetTop,
         left: offsetLeft,
-        width: dict.images[dict.imgIndex].width,
-        height : dict.images[dict.imgIndex].height,
+        width: image.width,
+        height : image.height,
       });
     }
 
@@ -1594,7 +1588,7 @@
       if (data.length <= 1) return;
       var imgBox = dict.layero.find('.layer-photos-pictures');
       var isImage = imgBox.find('img[data-index="'+dict.imgIndex +'"]');
-      dict.refreshImgaeInfo();
+      options.footer && dict.refreshImgaeInfo();
       if (isImage.length){
         isImage.removeClass('layui-hide').css({
           transform: 'none',
@@ -1602,58 +1596,60 @@
           height: dict.images[dict.imgIndex].oldHeight
         }).siblings().addClass('layui-hide');
         dict.getWinArea(isImage[0]);
-        dict.setArea(isImage[0]);
+        dict.setArea();
       }else {
-        imgBox.find('img').addClass('layui-hide');
+        imgBox.find('img:not(.layui-hide)').addClass('layui-hide');
         var image = data[dict.imgIndex - 1];
         dict.isMove = false;
         dict.loading();
+        dict.layero.find('.layer-layer-photos-page').addClass('layui-hide');
+        dict.isImageLoading = true;
         dict.loadImage(image.src, function (img) {
-          dict.getWinArea(img);
-          dict.setArea(img);
-          imgBox.append('<img style="width: '+img.width+'px;height: '+img.height+'px;cursor: move;" data-index="'+dict.imgIndex+'" src="' + image.src + '" alt="' + (image.alt || '') + '" layer-pid="' + (image.pid || '') + '"/>');
+          var area = dict.getWinArea(img);
+          dict.setArea();
+          imgBox.append('<img style="width: '+ area[0] +';height: '+ area[1] +';cursor: move;" data-index="'+ dict.imgIndex +'" src="' + image.src + '" alt="' + (image.alt || '') + '" layer-pid="' + (image.pid || '') + '"/>');
           layer.close(dict.loadi);
+          dict.layero.find('.layer-layer-photos-page').removeClass('layui-hide');
+          dict.isImageLoading = false;
         });
       }
-      options.tab && typeof options.tab === 'function' && options.tab(data[dict.imgIndex], dict.layero);
+      options.tab && typeof options.tab === 'function' && options.tab(data[dict.imgIndex - 1], dict.layero);
     }
 
     //更新底部图片信息
     dict.refreshImgaeInfo = function () {
-      var img = data[dict.imgIndex - 1];
+      var image = data[dict.imgIndex - 1];
       var html = [
-        '<h3>'+ (img.alt || '') +'</h3>',
+        '<h3>'+ (image.alt || '') +'</h3>',
         '<em>'+ dict.imgIndex +' / '+ data.length +'</em>',
-        '<a href="'+ img.src +'" target="_blank">查看原图</a>'
+        '<a href="'+ image.src +'" target="_blank">查看原图</a>'
       ].join('');
-      dict.layero.find('.layui-layer-imgtit').html(html);
+      dict.layero.find('.layui-layer-photos-footer').html(html);
     }
 
     // 事件
     dict.event = function () {
-      /*
-      dict.bigimg.hover(function(){
-        dict.imgsee.show();
-      }, function(){
-        dict.imgsee.hide();
-      });
-      */
-      dict.bigimg.find('.layui-layer-imgprev').on('click', function (event) {
+
+      //键盘事件
+      $(document).on('keyup', function (event) {
         event.preventDefault();
-        dict.imgprev(true);
+        var code = event.keyCode;
+
+        if (dict.isImageLoading && (code === 37 || code === 39)) return;
+
+        if (code === 37) {
+          dict.prevImage(true);
+        } else if (code === 39) {
+          dict.nextImage(true);
+        } else if (code === 27) {
+          layer.close(dict.index);
+        }
       });
 
-      dict.bigimg.find('.layui-layer-imgnext').on('click', function (event) {
-        event.preventDefault();
-        dict.imgnext(true);
-      });
-
-      $(document).on('keyup', dict.keyup);
-
-      var scalexFlag = true;
-      //工具栏事件
-      dict.layero.off('click').on('click', '*[toolbar-event]', function () {
-        var othis = $(this), event = othis.attr('toolbar-event');
+      //事件
+      dict.layero.off('click').on('click', '*[lay-event]', function () {
+        var othis = $(this);
+        var event = othis.attr('lay-event');
         var img = dict.layero.find('.layer-photos-pictures img[data-index="'+dict.imgIndex +'"]');
         var image = dict.images[dict.imgIndex];
         switch (event) {
@@ -1664,14 +1660,7 @@
             });
             break;
           case 'scalex':
-            if (scalexFlag) {
-              image.scaleX = -1;
-              scalexFlag = false;
-            } else {
-              image.scaleX = 1;
-              scalexFlag = true;
-            }
-            scalexFlag !== scalexFlag;
+            image.scaleX = image.scaleX === -1 ? 1 : -1;
             img.css({
               transform: dict.getTransform(image)
             });
@@ -1693,7 +1682,6 @@
             dict.setArea(image);
             break;
           case 'reset':
-            scalexFlag = true;
             dict.isMove = false;
             image.scaleX = 1;
             image.rotate = 0;
@@ -1709,19 +1697,25 @@
           case 'close':
             layer.close(dict.index);
             break;
+          case 'changeImage':
+            othis.attr('data-type') === 'next' ? dict.nextImage(true) : dict.prevImage(true);
+            break;
+          case 'thumbClick':
+            var index = parseInt(othis.attr('data-index'));
+            if (index === dict.imgIndex - 1) return;
+            dict.imgIndex = index + 1;
+            dict.setListScroll(othis);
+            dict.switchImage();
+            break;
+          case 'thumbBarToggle':
+            if (dict.thumbBar.hasClass('lock')){
+              dict.thumbBar.removeClass('lock').addClass('unlock');
+            }else {
+              dict.thumbBar.removeClass('unlock').addClass('lock');
+            }
+            break;
         }
       });
-
-      // 缩略图点击事件
-      dict.layero.on('click', '.layui-layer-images-thumb-item', function () {
-        var othis = $(this);
-        var index = parseInt(othis.attr('data-index'));
-        if (index === dict.imgIndex - 1) return;
-        dict.imgIndex = index + 1;
-        dict.setListScroll(othis);
-        dict.switchImage();
-        //dict.restImageAttr(index > dict.imgIndex ? index - 1 : index + 1);
-      })
     };
 
     // 加载动画
@@ -1746,6 +1740,8 @@
       img.onerror = function (e) {
         img.onerror = null;
         dict.error(e);
+        dict.isImageLoading = false;
+        dict.layero.find('.layer-layer-photos-page').removeClass('layui-hide');
       };
     }
 
@@ -1805,94 +1801,85 @@
         shade: 0.9,
         shadeClose: true,
         closeBtn: false,
-        move: '.layui-layer-phimg .layer-photos-pictures',
+        move: '.layer-layer-photos-main .layer-photos-pictures',
         moveType: 1,
         scrollbar: false,
         moveOut: true,
         anim: 5,
         isOutAnim: false,
         skin: 'layui-layer-photos' + skin('photos'),
-        content: '<div class="layui-layer-phimg">'
+        content: '<div class="layer-layer-photos-main">'
           + '<div class="layer-photos-pictures"><img data-index="'+dict.imgIndex+'" src="' + (data[start].src) + '" alt="' + (data[start].alt || '') + '" layer-pid="' + (data[start].pid || '') + '" /></div>'
           + function () {
-            var arr = ['<div class="layui-layer-imgsee">'];
 
+            var arr = ['<div class="layui-layer-photos-pointer">'];
             // 左右箭头翻页
             if (data.length > 1) {
-              arr.push(['<div class="layui-layer-imguide">',
-                '<span class="layui-icon layui-icon-left layui-layer-iconext layui-layer-imgprev"></span>',
-                '<span class="layui-icon layui-icon-right layui-layer-iconext layui-layer-imgnext"></span>',
+              arr.push(['<div class="layer-layer-photos-page">',
+                '<span lay-event="changeImage" data-type="prev" class="layui-icon layui-icon-left layui-layer-photos-prev"></span>',
+                '<span lay-event="changeImage" data-type="next" class="layui-icon layui-icon-right layui-layer-photos-next"></span>',
                 '</div>'].join(''));
-            }
-
-            // 底部栏
-            if (!options.hideFooter) {
-              arr.push(['<div class="layui-layer-imgbar">',
-                '<div class="layui-layer-imgtit">',
-                '<h3>' + (data[start].alt || '') + '</h3>',
-                '<em>' + dict.imgIndex + ' / ' + data.length + '</em>',
-                '<a href="' + data[start].src + '" target="_blank">查看原图</a>',
-                '</div>',
-                '</div>'].join(''));
-            }
-
-            //缩略图栏
-            if (options.thumbBar){
-              arr.push([
-                '<div class="layui-layer-images-thumb '+(!options.hideFooter ? 'onshow-footer' : '')+'">',
-                '<div class="layui-layer-images-thumb-list">',
-                (function () {
-                  var items = [];
-                  layui.each(data, function (index, item){
-                    if (!options.srcUseThumb && !item.thumb) return;
-                    items.push('<div data-index="'+index+'" class="layui-layer-images-thumb-item '+(dict.imgIndex -1 === index ? 'active' : '')+'" style="background-image: url('+( item.thumb || item.src )+')" />');
-                  });
-                  return items.join('');
-                })(),
-                '</div>',
-                '</div>'
-              ].join(''));
             }
 
             //工具栏
             if (options.toolbar) {
               arr.push([
-                '<div class="layui-layer-images-toolbar">',
-                '<div class="layer-images-tool-item">',
-                '<span toolbar-event="rotate" data-option="-15" title="向左旋转15°" style="transform: scaleX(-1);"><i class="layui-icon layui-icon-refresh rotate"></i></span>',
-                '<span toolbar-event="rotate" data-option="15" title="向右旋转15°"><i class="layui-icon layui-icon-refresh"></i></span>',
-                '<span toolbar-event="scalex" title="翻转"><i class="layui-icon layui-icon-slider"></i></span>',
-                '<span toolbar-event="zoom" data-option="0.1" title="放大图片"><i class="layui-icon layui-icon-add-circle"></i></span>',
-                '<span toolbar-event="zoom" data-option="-0.1" title="缩小图片"><i class="layui-icon layui-icon-reduce-circle"></i></span>',
-                '<span toolbar-event="reset" title="重置图片"><i class="layui-icon layui-icon-refresh-1"></i></span>',
-                '<span toolbar-event="close" title="关闭"><i class="layui-icon layui-icon-close"></i></span>',
-                '</div>',
+                '<div class="layui-layer-photos-toolbar layui-layer-photos-header">',
+                  '<span lay-event="rotate" data-option="-15" title="向左旋转15°" style="transform: scaleX(-1);"><i class="layui-icon layui-icon-refresh rotate"></i></span>',
+                  '<span lay-event="rotate" data-option="15" title="向右旋转15°"><i class="layui-icon layui-icon-refresh"></i></span>',
+                  '<span lay-event="scalex" title="变换"><i class="layui-icon layui-icon-slider"></i></span>',
+                  '<span lay-event="zoom" data-option="0.1" title="放大"><i class="layui-icon layui-icon-add-circle"></i></span>',
+                  '<span lay-event="zoom" data-option="-0.1" title="缩小"><i class="layui-icon layui-icon-reduce-circle"></i></span>',
+                  '<span lay-event="reset" title="还原"><i class="layui-icon layui-icon-refresh-1"></i></span>',
+                  '<span lay-event="close" title="关闭"><i class="layui-icon layui-icon-close"></i></span>',
                 '</div>'
               ].join(''));
             }
 
+            //缩略图栏
+            if (options.thumbBar){
+              arr.push([
+                '<div class="lock background layui-layer-photos-toolbar layui-layer-photos-thumb'+(options.footer ? ' onshow-footer' : '')+'">',
+                  '<div class="thumb-up-down background" lay-event="thumbBarToggle" data-action="show"><span class="background"></span></div>',
+                  '<div class="photos-thumb-list">',
+                  (function () {
+                    var items = [];
+                    layui.each(data, function (index, item){
+                      if (!options.srcUseThumb && !item.thumb) return;
+                      items.push('<div lay-event="thumbClick" data-index="'+index+'" class="photos-thumb-item '+(dict.imgIndex -1 === index ? 'active' : '')+'" style="background-image: url('+( item.thumb || item.src )+')" />');
+                    });
+                    return items.join('');
+                  })(),
+                  '</div>',
+                '</div>'
+              ].join(''));
+            }
+
+            // 底部栏
+            if (options.footer) {
+              arr.push([
+                '<div class="layui-layer-photos-toolbar layui-layer-photos-footer'+(options.thumbBar ? ' show-thumb-bar' : '')+'">',
+                  '<h3>' + (data[start].alt || '') + '</h3>',
+                  '<em>' + dict.imgIndex + ' / ' + data.length + '</em>',
+                  '<a href="' + data[start].src + '" target="_blank">查看原图</a>',
+                '</div>'].join(''));
+            }
             arr.push('</div>');
             return arr.join('');
           }()
           + '</div>',
         success: function (layero) {
           dict.layero = layero;
-          dict.bigimg = layero.find('.layui-layer-phimg');
-          dict.imgsee = layero.find('.layui-layer-imgbar');
+          if (options.thumbBar) dict.thumbBar = layero.find('.layui-layer-photos-thumb');
           dict.isMove = false;
           if (options.toolbar) {
-            layero.find('.layui-layer-content').addClass('layui-layer-images-toolbar-mode');
-            dict.bigimg.find('img[data-index="'+dict.imgIndex+'"]').css({
+            layero.find('.layer-photos-pictures img[data-index="'+ dict.imgIndex +'"]').css({
               width: dict.images[dict.imgIndex].width,
               height: dict.images[dict.imgIndex].height
             });
           }
           dict.event();
           options.success && typeof options.success === 'function' && options.success(layero);
-        },
-        end: function () {
-          dict.end = true;
-          $(document).off('keyup', dict.keyup);
         },
         moveEnd: function(layero){
           dict.isMove = true;
@@ -1931,13 +1918,13 @@
               var index = parseInt(img.attr('data-index')) - 1;
               if (dict.direction === 'Right' && data[index + 1]){
                 img.addClass('layui-hide');
-                dict.imgnext(true);
+                dict.nextImage(true);
                 $(document).mouseup();
                 return false;
               }
               if (dict.direction === 'Left' && data[index - 1]){
                 img.addClass('layui-hide');
-                dict.imgprev(true);
+                dict.prevImage(true);
                 $(document).mouseup();
                 return false;
               }

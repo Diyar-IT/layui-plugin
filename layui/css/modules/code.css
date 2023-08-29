@@ -67,8 +67,8 @@ html #layuicss-skincodecss{display:none; position: absolute; width:1989px;}
 
 
 
-.layui-code-diyar{font-family: 'consolas';border: none;;background-color: #4b4b4b;color: #dfdfdf;font-size: 16px;margin: 0;}
-.layui-code-diyar .layui-code-ol li{background-color: #3F3F3F; border-left: none;font-family: 'consolas';}
+.layui-code-diyar{font-family: 'consolas';background-color: #4b4b4b;color: #dfdfdf;margin: 0;}
+.layui-code-diyar .layui-code-ol li{background-color: #3F3F3F; border-color: #606060;font-family: 'consolas';}
 .layui-code-diyar span{font-family: 'consolas';}
 .layui-code-diyar span.code_str{color: #0aed54;}
 .layui-code-diyar span.code_san{color: #00cbff;}
@@ -85,7 +85,6 @@ html #layuicss-skincodecss{display:none; position: absolute; width:1989px;}
 .layui-code-preview.diyar .layui-tab-title .layui-this:after{border-bottom-color: #ffb500;}
 .layui-code-preview.diyar .layui-code-tools{color: white;}
 .layui-code-preview.diyar > .layui-tab{border-radius: 8px 8px 0 0;overflow: hidden;}
-.layui-code-preview.diyar > .layui-code{border: none;}
 
 .layui-code-preview.diyar-light .layui-tab-title{background-color: #f8f8f8;margin: 0;}
 .layui-code-preview.diyar-light .layui-tab{border-radius: 8px 8px 0 0;overflow: hidden;}

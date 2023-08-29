@@ -107,14 +107,20 @@ layui.define(['lay', 'util', 'element', 'form'], function (exports) {
             typeof options.onCopy === 'function' ? options.onCopy(finalCode) : function () {
               try {
                 navigator.clipboard.writeText(util.unescape(finalCode)).then(function () {
-                  layer.msg('已复制', {
-                    icon: 1
-                  });
+                  layer.msg('已复制', {icon: 1});
                 });
               } catch (e) {
-                layer.msg('复制失败', {
-                  icon: 2
-                });
+                var text = document.createElement("textarea");
+                text.setAttribute("readonly", "readonly");
+                text.value = util.unescape(finalCode);
+                document.body.appendChild(text);
+                text.select();
+                if (document.execCommand("copy")){
+                  layer.msg('已复制', {icon: 1});
+                }else {
+                  layer.msg('复制失败', {icon: 2});
+                }
+                document.body.removeChild(text);
               }
             }();
           }

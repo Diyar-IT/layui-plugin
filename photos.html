@@ -2,17 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>相册</title>
+    <title>Layui Photos</title>
     <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="layui/css/common.css"/>
+    <link rel="stylesheet" href="plugins/hljs/all_theme.css"/>
     <style>
         body {
             padding: 0;
             margin: 0;
-        }
-        .container {
-            padding: 20px;
-            margin: 0 auto;
-            margin-top: 30px;
         }
         .class-photos-demo img{
             width: 160px;
@@ -22,32 +19,43 @@
         }
     </style>
 
-    <script type="text/javascript" src="layui/layui.js"></script>
-    <script type="text/javascript" src="common.js"></script>
+  <script type="text/javascript" src="libs/require.js"></script>
+  <script type="text/javascript" src="layui/layui.js"></script>
+  <script type="text/javascript" src="common.js"></script>
+  <script type="text/javascript" src="plugins/hljs/highlight.js"></script>
 </head>
 <body>
 
 <div class="container">
-    <h3 class="layui-font-blue layui-font-24">layer.photos</h3>
-    <blockquote class="layui-elem-quote">
-        1、修复切换图片重复打开窗口问题<br>
-        2、修复切换图片重复加载图片问题<br>
-        3、优化旋转，翻转，放大，缩小功能<br>
-        4、增加缩略图预览，点击切换功能<br>
-        5、增加拖拽关闭切换图片功能<br>
-    </blockquote>
+  <div class="header">
+    <dd style="color: #16baaa;">Layui<sup id="layui_version"></sup></dd>
+    <dd>Photos Pro</dd>
+  </div>
 
+  <blockquote class="layui-elem-quote">
+    1，修复切换图片重复打开窗口问题、修复切换图片重复加载图片问题<br>
+    2，优化旋转，翻转，放大，缩小功能、修复切换图片时同步大小问题、优化事件代码、已清除多部分代码<br>
+    3，增加缩略图预览，点击切换功能<br>
+    4，增加拖拽关闭切换图片功能<br>
+    5，增加缩略图栏锁定功能
+  </blockquote>
 
-    <div class="code-1" style="margin: 10px 0;">
-        <pre class="layui-code code-demo" lay-options="{preview: true, layout: ['preview', 'code'], tools: ['full', 'copy']}">
-            <textarea>
+  <div class="theme-vs2015" style="margin: 10px 0;">
+        <pre class="layui-code code-demo" lay-options="{preview: true, encode:false, codeStyle: 'height: 500px;overflow: auto;', skin:'diyar', layout: ['preview', 'code'], tools: ['full', 'copy']}">
+            <textarea style="display: none;">
 <div class="layui-btn-container">
     <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="default"><i class="layui-icon layui-icon-picture"></i> 默认相册</button>
     <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="hideFooter"><i class="layui-icon layui-icon-picture"></i> 隐藏底部栏</button>
-    <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="toolbar"><i class="layui-icon layui-icon-picture"></i> 顶部工具栏</button>
-    <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="thumbBar"><i class="layui-icon layui-icon-picture"></i> 缩略图预览</button>
-    <button class="layui-btn layui-btn-lg layui-bg-blue" lay-event="pullSwitch"><i class="layui-icon layui-icon-picture"></i> 拖拽操作</button>
 </div>
+<div class="layui-btn-container">
+    <button class="layui-btn layui-btn-lg layui-bg-red" lay-event="thumbBar"><i class="layui-icon layui-icon-picture"></i> 缩略图-srcUseThumb:false</button>
+    <button class="layui-btn layui-btn-lg layui-bg-red" lay-event="useSrc"><i class="layui-icon layui-icon-picture"></i> 缩略图-srcUseThumb:true</button>
+</div>
+<div class="layui-btn-container">
+    <button class="layui-btn layui-btn-lg layui-btn-primary layui-border-blue" lay-event="toolbar"><i class="layui-icon layui-icon-picture"></i> 顶部工具栏</button>
+    <button class="layui-btn layui-btn-lg layui-btn-primary layui-border-blue" lay-event="pullSwitch"><i class="layui-icon layui-icon-picture"></i> 拖拽操作 - 左右切换，上下关闭</button>
+</div>
+<!-- import layui -->
 <script>
 layui.use(function(){
     var util = layui.util;
@@ -65,7 +73,7 @@ layui.use(function(){
             console.log(data); // 当前图片数据信息
             console.log(layero); // 图片层的容器对象
           },
-          hideFooter: false,
+          footer: true,
           toolbar: false,
           thumbBar: false,
           pullSwitch: false,
@@ -84,7 +92,7 @@ layui.use(function(){
             console.log(data); // 当前图片数据信息
             console.log(layero); // 图片层的容器对象
           },
-          hideFooter: true,
+          footer: false,
           toolbar: false,
           thumbBar: false,
           pullSwitch: false,
@@ -103,7 +111,7 @@ layui.use(function(){
             console.log(data); // 当前图片数据信息
             console.log(layero); // 图片层的容器对象
           },
-          hideFooter: false,
+          footer: true,
           toolbar: true,
           thumbBar: false,
           pullSwitch: false,
@@ -122,11 +130,30 @@ layui.use(function(){
             console.log(data); // 当前图片数据信息
             console.log(layero); // 图片层的容器对象
           },
-          hideFooter: false,
+          footer: true,
           toolbar: true,
           thumbBar: true,
           pullSwitch: false,
           srcUseThumb: false
+        });
+      },
+      useSrc: function () {
+        layer.photos({
+          photos: { // 图片层的数据源
+            "title": "相册标题", // 相册标题
+            "id": 123, // 相册 id
+            "start": 0, // 初始显示的图片序号，默认 0
+            "data": getPhotos(10)
+          },
+          tab: function (data, layero) { // 图片层切换后的回调
+            console.log(data); // 当前图片数据信息
+            console.log(layero); // 图片层的容器对象
+          },
+          footer: true,
+          toolbar: true,
+          thumbBar: true,
+          pullSwitch: false,
+          srcUseThumb: true
         });
       },
       pullSwitch: function () {
@@ -141,7 +168,7 @@ layui.use(function(){
             console.log(data); // 当前图片数据信息
             console.log(layero); // 图片层的容器对象
           },
-          hideFooter: false,
+          footer: true,
           toolbar: true,
           thumbBar: true,
           pullSwitch: true,
@@ -153,16 +180,16 @@ layui.use(function(){
 </script>
             </textarea>
         </pre>
-    </div>
+  </div>
 
 
-    <blockquote class="layui-elem-quote">
-        绑定页面图片元素
-    </blockquote>
+  <blockquote class="layui-elem-quote">
+    绑定页面图片元素
+  </blockquote>
 
-    <div class="code-1" style="margin: 10px 0;">
-<pre class="layui-code code-demo" lay-options="{preview: true, layout: ['preview', 'code'], tools: ['full', 'copy']}">
-  <textarea>
+  <div class="theme-base16-unikitty-light" style="margin: 10px 0;">
+<pre class="layui-code code-demo" lay-options="{preview: true, encode:false, codeStyle: 'height: 500px;overflow: auto;', skin:'diyar-light', layout: ['preview', 'code'], tools: ['full', 'copy']}">
+  <textarea style="display: none;">
 <div class="class-photos-demo" id="ID-photos-demo">
   <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg" layer-pid="" alt="photo-1">
   <img src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10002.jpg" layer-pid="" alt="photo-2">
@@ -176,7 +203,7 @@ layui.use(function(){
 
     layer.photos({
       photos: '#ID-photos-demo',
-      hideFooter: false,
+      footer: true,
       toolbar: true,
       thumbBar: true,
       pullSwitch: true,
@@ -186,13 +213,11 @@ layui.use(function(){
 </script>
   </textarea>
 </pre>
-    </div>
-
-
+  </div>
 </div>
 
 
-<script>
+<script type="text/javascript">
   var getPhotos = function (count) {
     var result = [];
     var imgi = 0;
@@ -209,11 +234,43 @@ layui.use(function(){
     }
     return result;
   }
-  layui.use(function () {
+  layui.use(['code', 'util'], function () {
     var $ = layui.$;
 
-    layui.code({
-      elem: $('.code-1 .code-demo')
+    $('#layui_version').text(layui.v);
+    require.config({baseUrl: "plugins/hljs/languages"});
+    require(['xml.min','javascript.min','css.min','handlebars.min'], function () {
+      layui.code({
+        elem: ".layui-code",
+        codeParse: function(code) {
+          var tpl, meta;
+          if ((this.allowParse ||  this.preview !== "iframe") && this.preview){
+            tpl = [
+              "<!DOCTYPE html>",
+              "<html>",
+              "<head>",
+              '  <meta charset="utf-8">',
+              '  <meta name="viewport" content="width=device-width, initial-scale=1">',
+              "  <title>Demo</title>",
+              "  \x3c!-- \u8bf7\u52ff\u5728\u9879\u76ee\u6b63\u5f0f\u73af\u5883\u4e2d\u5f15\u7528\u8be5 layui.css \u5730\u5740 --\x3e",
+              '  <link href="//unpkg.com/layui@' + layui.v + '/dist/css/layui.css" rel="stylesheet">',
+              "</head>",
+              "<body>"].join("\n");
+            meta = {
+              "\x3c!-- import layui --\x3e": '  \n\x3c!-- \u8bf7\u52ff\u5728\u9879\u76ee\u6b63\u5f0f\u73af\u5883\u4e2d\u5f15\u7528\u8be5 layui.js \u5730\u5740 --\x3e\n<script src="//unpkg.com/layui@' + layui.v + '/dist/layui.js"><\/script>'
+            }
+            layui.each(meta, function(key, val) {
+              code = code.replace(key, val)
+            });
+            code = [tpl, code, "</body>\n</html>"].join("\n");
+          }
+          return code;
+        },
+        codeRender(code) {
+          code = hljs.highlight(code, {language : 'xml'});
+          return code.value;
+        }
+      });
     });
 
   });

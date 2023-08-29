@@ -3,5 +3,9 @@ layui.config({
 }).extend({
   photosPro : 'photosPro',
   hljs : 'hljs/hljs',
-  encrypt: 'encrypt'
-});
+  encrypt: 'encrypt',
+  toast: "toast",
+  notice: 'notice/notice'
+}).use(['layer'], function () {
+
+})

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Layui Input & Textarea</title>
+  <link rel="stylesheet" href="layui/css/layui.css"/>
+  <link rel="stylesheet" href="layui/css/common.css"/>
+  <link rel="stylesheet" href="plugins/hljs/all_theme.css"/>
+  <style>
+    .event_change{
+        padding-right: 5px;
+        color: red;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <dd style="color: #16baaa;">Layui<sup id="layui_version"></sup></dd>
+    <dd>Input & Textarea</dd>
+  </div>
+
+  <div class="theme-base16-unikitty-light">
+        <pre class="layui-code code-demo"  lay-options="{id: 'textarea-demo-1',preview: true,encode:false, codeStyle: 'height: 500px;overflow: auto;', skin:'diyar-light', layout: ['preview', 'code'], tools: ['full'], done: function(obj){obj.render();}}">
+  <textarea>
+<form class="layui-form layui-form-pane min-form-xl" action="">
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">姓名：</label>
+      <div class="layui-input-block">
+        <input name="affix_isim" lay-affix="isim" autocomplete="off" placeholder="中间点Uncode编码:\u2022" class="layui-input" type="text">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">姓名：</label>
+      <div class="layui-input-block">
+        <input name="affix_isim_1" lay-affix="isim" autocomplete="off" placeholder="小数民族姓名中间点" class="layui-input" type="text">
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">clear：</label>
+      <div class="layui-input-block">
+        <input name="affix_clear" lay-affix="clear" autocomplete="off" placeholder="clear" class="layui-input" type="text">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">number：</label>
+      <div class="layui-input-block">
+        <input name="affix_number" lay-affix="number" autocomplete="off" placeholder="number" class="layui-input" type="text">
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">layui-icon：</label>
+      <div class="layui-input-block">
+        <input name="affix_chrome" lay-affix="chrome" autocomplete="off" placeholder="layui-icon" class="layui-input" type="text">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">custom-icon：</label>
+      <div class="layui-input-block">
+        <input name="affix_custom_icon" lay-affix="diyar-sf" lay-options="{diyaricon:true}" autocomplete="off" placeholder="custom-icon" class="layui-input" type="text">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">text：</label>
+      <div class="layui-input-block">
+        <input name="affix_text_rmb" lay-affix="text" affix-text="元" autocomplete="off" placeholder="text" class="layui-input" type="text">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">text：</label>
+      <div class="layui-input-block">
+        <input name="affix_text_kg" lay-affix="text" affix-text="kg" autocomplete="off" placeholder="text" class="layui-input" type="text">
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">button：</label>
+      <div class="layui-input-block">
+        <input name="affix_button" autocomplete="off" lay-affix="button" affix-text="按钮" placeholder="button" class="layui-input" type="text">
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <label class="layui-form-label">eye：</label>
+      <div class="layui-input-block">
+        <input name="affix_eye" autocomplete="off" value="lay-affix=eye" lay-affix="eye" placeholder="eye" class="layui-input" type="password">
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">货币模式：</label>
+      <div class="layui-input-block">
+        <input name="affix_money_usd" lay-affix="number" min="0" max="50" step="0.5" money symbol="$" autocomplete="off" placeholder="price" class="layui-input" type="text">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-form-mid layui-word-aux">symbol: $, step: 0.5, min: 0, max: 50</div>
+    </div>
+  </div>
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">货币模式：</label>
+      <div class="layui-input-block">
+        <input name="affix_money_rmb" lay-filter="affix_demo" lay-affix="number" step="5" money symbol="¥" autocomplete="off" placeholder="price" class="layui-input" type="text">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-form-mid layui-word-aux"><span class="event_change"></span>step: 5, symbol: ¥</div>
+    </div>
+  </div>
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">鼠标滚轮：</label>
+      <div class="layui-input-block">
+        <input name="affix_money_roller" lay-filter="affix_demo" lay-affix="number" max="100" step="5" lay-options="{roller:true}" money symbol="$" lay-verify="required" autocomplete="off" placeholder="price" class="layui-input" type="text">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-form-mid layui-word-aux"><span class="event_change"></span>symbol: $, step: 5, max: 100, lay-options="{roller:true}"</div>
+    </div>
+  </div>
+
+  <div class="layui-form-item lay-flex">
+    <div class="layui-inline">
+      <label class="layui-form-label">鼠标滚轮：</label>
+      <div class="layui-input-block">
+        <input name="affix_money_roller_min" lay-filter="affix_demo" lay-affix="number" max="0" step="100" lay-options="{roller:true}" money symbol="¥" lay-verify="required" autocomplete="off" placeholder="price" class="layui-input" type="text">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-form-mid layui-word-aux"><span class="event_change"></span>symbol: ¥, step: 100, max: 0, lay-options="{roller:true}"</div>
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-form-text" style="width: 664px;">
+    <label class="layui-form-label" style="width: 100%;text-align: left;">Textarea：clear, maxlength=11, show-count, lay-verify=min:2|max:5</label>
+    <div class="layui-input-block" style="margin: 0px;">
+      &lt;textarea name="textarea" lay-errtitle="Textarea内容不能" placeholder="lay-verify: min:2|max:5,内容不能少于3个字符，不能大于5个字符" lay-affix="clear" show-count maxlength="11" lay-verify="min:2|max:5" class="layui-textarea" style="min-height: 150px;"&gt;&lt;/textarea&gt;
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-form-text" style="width: 664px;">
+    <label class="layui-form-label" style="width: 100%;text-align: left;">Textarea：show-count, lay-verify=min:5|max:100</label>
+    <div class="layui-input-block" style="margin: 0px;">
+      &lt;textarea name="textarea" lay-errtitle="Textarea内容不能" placeholder="内容不能少于5个字符，不能大于100个字符" lay-affix="" show-count lay-verify="min:5|max:100" class="layui-textarea" style="min-height: 150px;"&gt;&lt;/textarea&gt;
+    </div>
+  </div>
+
+  <div class="layui-btn-container">
+    <button type="submit" class="layui-btn layui-bg-blue" lay-submit lay-filter="demo1">立即提交</button>
+    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+  </div>
+
+</form>
+<!-- import layui -->
+<script>
+layui.use(['form', 'util','toast'], function(){
+  var form = layui.form;
+  var $ = layui.$;
+  var util = layui.util;
+
+  // form验证提示使用第三方toast组件
+  form.set({allverType : 'toast'});
+
+  // 提交事件
+  form.on('submit(demo1)', function(data){
+    var field = data.field; // 获取表单字段值
+    // 显示填写结果，仅作演示用
+    layer.alert(JSON.stringify(field), {
+      title: '当前填写的字段值'
+    });
+    // 此处可执行 Ajax 等操作
+    // …
+    return false; // 阻止默认 form 跳转
+  });
+  //affix事件
+  form.on('input-affix(affix_demo)', function(obj){
+    $(obj.elem).parents('.layui-form-item').find('.event_change').text(obj.elem.value);
+  });
+
+});
+  </textarea>
+        </pre>
+  </div>
+</div>
+
+<script type="text/javascript" src="libs/require.js"></script>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="common.js"></script>
+<script type="text/javascript" src="plugins/hljs/highlight.js"></script>
+<script type="text/javascript">
+  layui.use(['code', 'util'], function () {
+    var $ = layui.$;
+    var code = layui.code;
+    var util = layui.util;
+
+    $('#layui_version').text(layui.v);
+    require.config({baseUrl: "plugins"});
+    require(['hljs/languages/xml.min','hljs/languages/javascript.min','hljs/languages/css.min','hljs/languages/handlebars.min'], function () {
+      layui.code({
+        codeParse: function(code) {
+          var tpl, meta;
+          if ((this.allowParse ||  this.preview !== "iframe") && this.preview){
+            tpl = [
+              "<!DOCTYPE html>",
+              "<html>",
+              "<head>",
+              '  <meta charset="utf-8">',
+              '  <meta name="viewport" content="width=device-width, initial-scale=1">',
+              "  <title>Demo</title>",
+              "  \x3c!-- \u8bf7\u52ff\u5728\u9879\u76ee\u6b63\u5f0f\u73af\u5883\u4e2d\u5f15\u7528\u8be5 layui.css \u5730\u5740 --\x3e",
+              '  <link href="//unpkg.com/layui@' + layui.v + '/dist/css/layui.css" rel="stylesheet">',
+              "</head>",
+              "<body>"].join("\n");
+            meta = {
+              "\x3c!-- import layui --\x3e": '  \n\x3c!-- \u8bf7\u52ff\u5728\u9879\u76ee\u6b63\u5f0f\u73af\u5883\u4e2d\u5f15\u7528\u8be5 layui.js \u5730\u5740 --\x3e\n<script src="//unpkg.com/layui@' + layui.v + '/dist/layui.js"><\/script>'
+            }
+            layui.each(meta, function(key, val) {
+              code = code.replace(key, val)
+            });
+            code = [tpl, code, "</body>\n</html>"].join("\n");
+          }
+          return code;
+        },
+        codeRender(code) {
+          return hljs.highlight(code, {language : 'xml'}).value;
+        }
+      });
+    });
+
+  });
+</script>
+</body>
+</html>
